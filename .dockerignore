@@ -1,0 +1,13 @@
+**
+!go.mod
+!go.sum
+!cmd/
+!cmd/ingest/
+!cmd/ingest/*.go
+!cmd/ingest/*.sql
+!cmd/map-amounts/
+!cmd/map-amounts/*.go
+!cmd/map-amounts/*.sql
+!cmd/reconcile/
+!cmd/reconcile/*.go
+!cmd/reconcile/*.sql

@@ -1,0 +1,8 @@
+{
+  "name": "portone-reconciliation",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22" },
+  "packageManager": "pnpm@11.25.0",
+  "dependencies": { "exceljs": "4.4.0" }
+}

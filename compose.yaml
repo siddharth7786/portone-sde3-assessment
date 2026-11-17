@@ -1,0 +1,47 @@
+services:
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: portone
+      POSTGRES_PASSWORD: portone
+      POSTGRES_DB: portone
+    ports:
+      - "127.0.0.1:5432:5432"
+    healthcheck:
+      test: ["CMD", "pg_isready", "-h", "127.0.0.1", "-U", "portone", "-d", "portone"]
+      interval: 2s
+      timeout: 3s
+      retries: 20
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+  ingest:
+    image: portone-assessment:local
+    build: .
+    environment:
+      DATABASE_URL: postgres://portone:portone@db:5432/portone?sslmode=disable
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./reports:/reports:ro
+  mapper:
+    image: portone-assessment:local
+    build: .
+    entrypoint: ["map-amounts"]
+    environment:
+      DATABASE_URL: postgres://portone:portone@db:5432/portone?sslmode=disable
+    depends_on:
+      db:
+        condition: service_healthy
+  reconcile:
+    image: portone-assessment:local
+    build: .
+    entrypoint: ["reconcile"]
+    environment:
+      DATABASE_URL: postgres://portone:portone@db:5432/portone?sslmode=disable
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  postgres_data:

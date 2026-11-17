@@ -1,0 +1,9 @@
+/drive-download-*
+/reports/amazon_payments_data.csv
+/reports/amazon_settlements_data.txt
+.~lock.*#
+
+/node_modules/
+*.xlsx.inspect.ndjson
+
+/submission/portone-assessment.zip
